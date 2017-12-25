@@ -16,8 +16,6 @@ class APIHelper: NSObject {
         let url = urlString + "/api/getproducts"
         let request = NSMutableURLRequest(url: URL(string: url)!)
         request.httpMethod = "GET"
-        //var params = ["username":"username", "password":"password"] as Dictionary<String, String>
-        //request.HTTPBody = try? NSJSONSerialization.dataWithJSONObject(params, options: [])
         let task = URLSession.shared.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) in
             if error == nil {
                 let json = try? JSONSerialization.jsonObject(with: data!, options: []) as! NSArray
@@ -58,6 +56,22 @@ class APIHelper: NSObject {
             } else {
                 print("Error loading orders")
                 finishedClosure(nil)
+            }
+        }
+        task.resume()
+    }
+    
+    internal func deleteOrder(withOrderNumber num: Int) {
+        let url = urlString + "/api/deleteorder"
+        let request = NSMutableURLRequest(url: URL(string: url)!)
+        let data = "number=\(num)"
+        request.httpBody = data.data(using: .utf8)
+        request.httpMethod = "POST"
+        let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
+            if error != nil {
+                print("Error deleting product")
+            } else {
+                print("Deleted order: \(num)")
             }
         }
         task.resume()

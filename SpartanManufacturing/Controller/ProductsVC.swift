@@ -47,7 +47,7 @@ class ProductsVC: UITableViewController {
                 if let products = products {
                     self.products = products
                     DispatchQueue.main.async {
-                        self.tableView.reloadData()
+                        self.tableView.reloadSections([0], with: .automatic)
                     }
                 }
             }

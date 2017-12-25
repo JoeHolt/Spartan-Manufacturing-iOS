@@ -17,9 +17,8 @@ class OrderVC: UITableViewController {
         super.viewDidLoad()
         
         title = "Orders"
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
-        
+        apiHelper.deleteOrder(withOrderNumber: 3)
         refresh()
         
     }
@@ -45,17 +44,32 @@ class OrderVC: UITableViewController {
         })
     }
     
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
+            let order = self.orders[indexPath.row]
+            self.deleteOrderAtRow(row: indexPath.row, orderNumber: order.number)
+        }
+        delete.backgroundColor = UIColor.red
+        return [delete]
+    }
+    
     @objc internal func refresh() {
         DispatchQueue.global(qos: .userInitiated).async {
             self.apiHelper.getAllOrders() { orders in
                 if let o = orders {
                     self.orders = o
                     DispatchQueue.main.async {
-                        self.tableView.reloadData()
+                        self.tableView.reloadSections([0], with: .automatic)
                     }
                 }
             }
         }
+    }
+    
+    private func deleteOrderAtRow(row: Int, orderNumber: Int) {
+        apiHelper.deleteOrder(withOrderNumber: orderNumber)
+        orders.remove(at: row)
+        tableView.reloadSections([0], with: .automatic)
     }
 
 }

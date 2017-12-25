@@ -46,11 +46,14 @@ class OrderVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
-            let order = self.orders[indexPath.row]
-            self.deleteOrderAtRow(row: indexPath.row, orderNumber: order.number)
+            self.deleteOrderAtRow(row: indexPath.row)
         }
         delete.backgroundColor = UIColor.red
-        return [delete]
+        let complete = UITableViewRowAction(style: .default, title: "Complete") { (action, indexPath) in
+            self.completeOrderAtRow(row: indexPath.row)
+        }
+        complete.backgroundColor = UIColor.blue
+        return [delete, complete]
     }
     
     @objc internal func refresh() {
@@ -66,8 +69,16 @@ class OrderVC: UITableViewController {
         }
     }
     
-    private func deleteOrderAtRow(row: Int, orderNumber: Int) {
-        apiHelper.deleteOrder(withOrderNumber: orderNumber)
+    private func completeOrderAtRow(row: Int) {
+        let order = orders[row]
+        apiHelper.markOrderCompleted(completed: !order.completed, num: order.number)
+        order.completed = !order.completed
+        tableView.reloadSections([0], with: .automatic)
+    }
+    
+    private func deleteOrderAtRow(row: Int) {
+        let order = orders[row]
+        apiHelper.deleteOrder(withOrderNumber: order.number)
         orders.remove(at: row)
         tableView.reloadSections([0], with: .automatic)
     }

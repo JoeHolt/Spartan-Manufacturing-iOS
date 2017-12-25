@@ -77,6 +77,22 @@ class APIHelper: NSObject {
         task.resume()
     }
     
+    internal func markOrderCompleted(completed: Bool, num: Int) {
+        let url = urlString + "/api/completeorder"
+        let request = NSMutableURLRequest(url: URL(string: url)!)
+        let data = "completed=\(completed)&number=\(num)"
+        request.httpBody = data.data(using: .utf8)
+        request.httpMethod = "POST"
+        let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
+            if error != nil {
+                print("Error marking order completed")
+            } else {
+                print("Completed(\(completed)): \(num)")
+            }
+        }
+        task.resume()
+    }
+    
 }
 
 

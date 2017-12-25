@@ -18,7 +18,7 @@ class Order: NSObject {
     init?(json: [String: Any]) {
         guard let name = json["name"] as? String,
             let number = json["number"] as? Int,
-            let completed = json["completed"] as? String,
+            let completed = json["completed"] as? Bool,
             let date = json["date"] as? String,
             let notes = json["notes"] as? String
         else {
@@ -27,12 +27,9 @@ class Order: NSObject {
         self.name = name
         self.number = number
         self.notes = notes
-        self.completed = false
+        self.completed = completed
         let formatter = DateFormatter()
         formatter.dateFormat = "YYYY-MM-DD HH:m:s"
         self.date = formatter.date(from: date)
-        if completed.lowercased() == "yes" {
-            self.completed = true
-        }
     }
 }

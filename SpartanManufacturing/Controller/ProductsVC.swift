@@ -16,12 +16,8 @@ class ProductsVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Products"
+        setUp()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Modify", style: .plain, target: self, action: #selector(edit))
-        
-        refresh()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -48,6 +44,7 @@ class ProductsVC: UITableViewController {
                     self.products = products
                     DispatchQueue.main.async {
                         self.tableView.reloadSections([0], with: .automatic)
+                        self.refreshControl!.endRefreshing()
                     }
                 }
             }
@@ -56,6 +53,17 @@ class ProductsVC: UITableViewController {
     
     @objc internal func edit() {
         print("Modify")
+    }
+    
+    private func setUp() {
+        title = "Products"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Modify", style: .plain, target: self, action: #selector(edit))
+        refresh()
+        refreshControl = UIRefreshControl()
+        refreshControl!.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)
+        //tableView.addSubview(refreshCon)
     }
 
 }

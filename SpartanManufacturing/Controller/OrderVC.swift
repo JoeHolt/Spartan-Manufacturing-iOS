@@ -16,9 +16,7 @@ class OrderVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Orders"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
-        apiHelper.deleteOrder(withOrderNumber: 3)
+        setUp()
         refresh()
         
     }
@@ -63,6 +61,7 @@ class OrderVC: UITableViewController {
                     self.orders = o
                     DispatchQueue.main.async {
                         self.tableView.reloadSections([0], with: .automatic)
+                        self.refreshControl!.endRefreshing()
                     }
                 }
             }
@@ -81,6 +80,17 @@ class OrderVC: UITableViewController {
         apiHelper.deleteOrder(withOrderNumber: order.number)
         orders.remove(at: row)
         tableView.reloadSections([0], with: .automatic)
+    }
+    
+    private func setUp() {
+        // General Setup
+        title = "Orders"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
+        // Pull to refresh
+        refreshControl = UIRefreshControl()
+        refreshControl!.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)
+        
     }
 
 }

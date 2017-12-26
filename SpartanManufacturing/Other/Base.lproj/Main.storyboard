@@ -74,11 +74,11 @@
             </objects>
             <point key="canvasLocation" x="748.79999999999995" y="-347.22638680659674"/>
         </scene>
-        <!--Second-->
+        <!--Orders-->
         <scene sceneID="AE0-pr-2Mx">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DLf-jI-itc" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Second" image="second" id="cPa-gy-q4n"/>
+                    <tabBarItem key="tabBarItem" title="Orders" image="second" id="cPa-gy-q4n"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="rle-jh-jMZ">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>

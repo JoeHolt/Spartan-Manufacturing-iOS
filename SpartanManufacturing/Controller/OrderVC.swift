@@ -8,10 +8,14 @@
 
 import UIKit
 
-class OrderVC: UITableViewController, UIPopoverPresentationControllerDelegate {
+class OrderVC: UITableViewController, UIPopoverPresentationControllerDelegate, AddOrderDelegate {
 
+    // MARK: - Properties
+    
     internal var orders = [Order]()
     private let apiHelper = APIHelper()
+    
+    // MARK: - iOS
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +62,8 @@ class OrderVC: UITableViewController, UIPopoverPresentationControllerDelegate {
         return UIModalPresentationStyle.none
     }
     
+    // MARK: - Usage
+    
     @objc internal func refresh() {
         DispatchQueue.global(qos: .userInitiated).async {
             self.apiHelper.getAllOrders() { orders in
@@ -74,32 +80,40 @@ class OrderVC: UITableViewController, UIPopoverPresentationControllerDelegate {
     
     private func completeOrderAtRow(row: Int) {
         let order = orders[row]
-        apiHelper.markOrderCompleted(completed: !order.completed, num: order.number)
+        apiHelper.markOrderCompleted(completed: !order.completed, num: order.number!)
         order.completed = !order.completed
         tableView.reloadSections([0], with: .automatic)
     }
     
     private func deleteOrderAtRow(row: Int) {
         let order = orders[row]
-        apiHelper.deleteOrder(withOrderNumber: order.number)
+        apiHelper.deleteOrder(withOrderNumber: order.number!)
         orders.remove(at: row)
         tableView.reloadSections([0], with: .automatic)
     }
     
     @objc private func addOrder() {
         
-        let popoverContent = AddOrderVC()
+        let popoverContent = self.storyboard?.instantiateViewController(withIdentifier: "AddOrder") as! AddOrderVC
+        popoverContent.delegate = self
         let nav = UINavigationController(rootViewController: popoverContent)
         nav.modalPresentationStyle = UIModalPresentationStyle.popover
         let popover = nav.popoverPresentationController
-        popoverContent.preferredContentSize = CGSize(width: 500, height: 600)
+        popoverContent.preferredContentSize = CGSize(width: 500, height: 272)
         popover?.delegate = self
         popover?.barButtonItem = navigationItem.rightBarButtonItem
         //popover?.sourceRect = navigationItem.rightBarButtonItem
         
         self.present(nav, animated: true, completion: nil)
-        
     }
+    
+    // MARK: - Delegate
+    
+    func didAddOrder() {
+        refresh()
+    }
+    
+    // MARK: - Set up
     
     private func setUp() {
         // General Setup

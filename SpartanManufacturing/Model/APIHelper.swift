@@ -48,7 +48,9 @@ class APIHelper: NSObject {
                     for dic in arr {
                         if let d = dic as? [String: Any] {
                             let newProduct = Order(json: d)
-                            orders.append(newProduct!)
+                            if let new = newProduct {
+                                orders.append(new)
+                            }
                         }
                     }
                     finishedClosure(orders)
@@ -88,6 +90,27 @@ class APIHelper: NSObject {
                 print("Error marking order completed")
             } else {
                 print("Completed(\(completed)): \(num)")
+            }
+        }
+        task.resume()
+    }
+    
+    internal func addOrder(order: Order) {
+        let url = urlString + "/api/addorder/"
+        let request = NSMutableURLRequest(url: URL(string: url)!)
+        let n = order.number
+        var num = ""
+        if let number = n {
+            num = "\(number)"
+        }
+        let data = "number=\(num)&notes=\(order.notes ?? "")&name=\(order.name!)"
+        request.httpBody = data.data(using: .utf8)
+        request.httpMethod = "POST"
+        let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
+            if error != nil {
+                print("Error adding item")
+            } else {
+                print("Added part: \(order.name)")
             }
         }
         task.resume()

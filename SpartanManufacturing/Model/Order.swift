@@ -10,10 +10,18 @@ import UIKit
 
 class Order: NSObject {
     internal var name: String!
-    internal var number: Int!
+    internal var number: Int?
     internal var completed: Bool!
-    internal var date: Date!
-    internal var notes: String!
+    internal var date: Date?
+    internal var notes: String?
+    
+    init(name: String, number: Int?, completed: Bool, date: Date?, notes: String?) {
+        self.name = name
+        self.number = number
+        self.completed = completed
+        self.date = date
+        self.notes = notes
+    }
     
     init?(json: [String: Any]) {
         guard let name = json["name"] as? String,

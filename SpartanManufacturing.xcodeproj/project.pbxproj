@@ -30,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6922A42C1FF4372800185187 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		69BE78A21FEF438F004F49A6 /* SpartanManufacturing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpartanManufacturing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69BE78A51FEF438F004F49A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		69BE78A71FEF438F004F49A6 /* ProductsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsVC.swift; sourceTree = "<group>"; };
@@ -67,6 +68,7 @@
 		69BE78991FEF438F004F49A6 = {
 			isa = PBXGroup;
 			children = (
+				6922A42C1FF4372800185187 /* README.md */,
 				69BE78A41FEF438F004F49A6 /* SpartanManufacturing */,
 				69BE78BB1FEF438F004F49A6 /* SpartanManufacturingTests */,
 				69BE78A31FEF438F004F49A6 /* Products */,

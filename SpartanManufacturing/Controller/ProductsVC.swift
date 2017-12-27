@@ -10,8 +10,12 @@ import UIKit
 
 class ProductsVC: UITableViewController {
 
+    // MARK: - Properties
+    
     private let apiHelper = APIHelper()
     private var products = [Product]()
+    
+    // MARK: - iOS
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +37,32 @@ class ProductsVC: UITableViewController {
         return products.count
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let action = UITableViewRowAction(style: .normal, title: "Edit Stock") { (action, indexPath) in
+            self.modifyInventory(product: self.products[indexPath.row])
+        }
+        action.backgroundColor = UIColor.blue
+        return [action]
+    }
+    
+    // MARK: - Usage
+    
+    private func modifyInventory(product: Product) {
+        let alert = UIAlertController(title: product.name, message: "Modify Product Stock", preferredStyle: .alert)
+        alert.addTextField { (textfield) in
+            textfield.placeholder = "\(product.stock!)"
+        }
+        let add = UIAlertAction(title: "Modify", style: .default) { (action) in
+            let textField = alert.textFields![0] as UITextField
+            if let num = Int(textField.text!) {
+                self.apiHelper.modifyInventory(name: product.name, newInventory: num)
+                self.refresh()
+            }
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(add)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
     }
     
     @objc internal func refresh() {
@@ -51,15 +79,9 @@ class ProductsVC: UITableViewController {
         }
     }
     
-    @objc internal func edit() {
-        print("Modify")
-    }
-    
     private func setUp() {
         title = "Products"
         navigationController?.navigationBar.prefersLargeTitles = true
-        //navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Modify", style: .plain, target: self, action: #selector(edit))
         refresh()
         refreshControl = UIRefreshControl()
         refreshControl!.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)

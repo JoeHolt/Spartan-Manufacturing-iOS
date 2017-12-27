@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OrderVC: UITableViewController {
+class OrderVC: UITableViewController, UIPopoverPresentationControllerDelegate {
 
     internal var orders = [Order]()
     private let apiHelper = APIHelper()
@@ -54,6 +54,10 @@ class OrderVC: UITableViewController {
         return [delete, complete]
     }
     
+    internal func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
+    }
+    
     @objc internal func refresh() {
         DispatchQueue.global(qos: .userInitiated).async {
             self.apiHelper.getAllOrders() { orders in
@@ -82,11 +86,26 @@ class OrderVC: UITableViewController {
         tableView.reloadSections([0], with: .automatic)
     }
     
+    @objc private func addOrder() {
+        
+        let popoverContent = AddOrderVC()
+        let nav = UINavigationController(rootViewController: popoverContent)
+        nav.modalPresentationStyle = UIModalPresentationStyle.popover
+        let popover = nav.popoverPresentationController
+        popoverContent.preferredContentSize = CGSize(width: 500, height: 600)
+        popover?.delegate = self
+        popover?.barButtonItem = navigationItem.rightBarButtonItem
+        //popover?.sourceRect = navigationItem.rightBarButtonItem
+        
+        self.present(nav, animated: true, completion: nil)
+        
+    }
+    
     private func setUp() {
         // General Setup
         title = "Orders"
         navigationController?.navigationBar.prefersLargeTitles = true
-        //navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addOrder))
         // Pull to refresh
         refreshControl = UIRefreshControl()
         refreshControl!.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)

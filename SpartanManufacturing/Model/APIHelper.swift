@@ -10,7 +10,7 @@ import Foundation
 
 class APIHelper: NSObject {
     
-    let urlString = "http://10.0.1.188:8081"
+    let urlString = "http://13.58.161.45"
     
     internal func getAllProducts(finishedClosure:@escaping (([Product]?)-> Void)) {
         let url = urlString + "/api/getproducts"

@@ -42,7 +42,12 @@ class ProductsVC: UITableViewController {
             self.modifyInventory(product: self.products[indexPath.row])
         }
         action.backgroundColor = UIColor.blue
-        return [action]
+        let action2 = UITableViewRowAction(style: .normal, title: "Delete") { (action, indexPath) in
+            self.deleteProduct(product: self.products[indexPath.row], indexPath: indexPath)
+        }
+        action2.backgroundColor = UIColor.red
+        
+        return [action2, action]
     }
     
     // MARK: - Usage
@@ -69,6 +74,33 @@ class ProductsVC: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    private func deleteProduct(product: Product, indexPath: IndexPath) {
+        apiHelper.deleteProduct(withName: product.name)
+        products.remove(at: indexPath.row)
+        refresh()
+    }
+    
+    @objc private func addNewProduct() {
+        let alert = UIAlertController(title: "Add Product", message: nil, preferredStyle: .alert)
+        alert.addTextField { (textfield) in
+            textfield.placeholder = "Name"
+        }
+        alert.addTextField { (textfield) in
+            textfield.placeholder = "Stock"
+        }
+        let addAction = UIAlertAction(title: "Add", style: .default) { (action) in
+            let name = alert.textFields![0].text ?? "Error"
+            let stock = Int(alert.textFields![0].text!) ?? 10
+            self.apiHelper.addProduct(name: name, stock: stock) {
+                self.refresh()
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(addAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
     @objc internal func refresh() {
         DispatchQueue.global(qos: .userInitiated).async {
             self.apiHelper.getAllProducts() { products in
@@ -89,7 +121,7 @@ class ProductsVC: UITableViewController {
         refresh()
         refreshControl = UIRefreshControl()
         refreshControl!.addTarget(self, action: #selector(refresh), for: UIControlEvents.valueChanged)
-        //tableView.addSubview(refreshCon)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewProduct))
     }
 
 }

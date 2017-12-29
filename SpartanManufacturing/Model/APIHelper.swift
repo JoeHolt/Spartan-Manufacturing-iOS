@@ -106,6 +106,22 @@ class APIHelper: NSObject {
         task.resume()
     }
     
+    internal func deleteProduct(withName name: String) {
+        let url = urlString + "/api/deleteproduct"
+        let request = NSMutableURLRequest(url: URL(string: url)!)
+        let data = "name=\(name)"
+        request.httpBody = data.data(using: .utf8)
+        request.httpMethod = "POST"
+        let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
+            if error != nil {
+                print("Error deleting product")
+            } else {
+                print("Deleted product: \(name)")
+            }
+        }
+        task.resume()
+    }
+    
     internal func modifyStatus(status: String, id: Int, finish:@escaping(() -> Void)) {
         let url = urlString + "/api/modifystatus"
         let request = NSMutableURLRequest(url: URL(string: url)!)
@@ -139,6 +155,23 @@ class APIHelper: NSObject {
                 print("Error adding item")
             } else {
                 print("Added part: \(order.name)")
+            }
+            finish()
+        }
+        task.resume()
+    }
+    
+    internal func addProduct(name: String, stock: Int, finish:@escaping(() -> Void)) {
+        let url = urlString + "/api/addproduct"
+        let request = NSMutableURLRequest(url: URL(string: url)!)
+        let data = "stock=\(stock)&name=\(name)"
+        request.httpBody = data.data(using: .utf8)
+        request.httpMethod = "POST"
+        let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
+            if error != nil {
+                print("Error adding item")
+            } else {
+                print("Added product: \(name)")
             }
             finish()
         }

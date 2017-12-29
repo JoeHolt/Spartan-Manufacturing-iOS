@@ -55,8 +55,12 @@ class ProductsVC: UITableViewController {
         let add = UIAlertAction(title: "Modify", style: .default) { (action) in
             let textField = alert.textFields![0] as UITextField
             if let num = Int(textField.text!) {
-                self.apiHelper.modifyInventory(name: product.name, newInventory: num)
-                self.refresh()
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.apiHelper.modifyInventory(name: product.name, newInventory: num)
+                }
+                DispatchQueue.main.async {
+                    self.refresh()
+                }
             }
         }
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)

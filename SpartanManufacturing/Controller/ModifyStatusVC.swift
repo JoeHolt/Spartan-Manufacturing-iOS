@@ -51,8 +51,9 @@ class ModifyStatusVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     // MARK: - User
     
     @objc private func modifyInventory() {
-        APIHelper().modifyStatus(status: currentSelection, id: orderNumber)
-        delegate.didModifyStatus()
+        APIHelper().modifyStatus(status: currentSelection, id: orderNumber) {
+            self.delegate.didModifyStatus()
+        }
         self.dismiss(animated: true, completion: nil)
     }
     

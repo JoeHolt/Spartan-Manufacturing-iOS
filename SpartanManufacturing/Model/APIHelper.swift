@@ -106,7 +106,7 @@ class APIHelper: NSObject {
         task.resume()
     }
     
-    internal func modifyStatus(status: String, id: Int) {
+    internal func modifyStatus(status: String, id: Int, finish:@escaping(() -> Void)) {
         let url = urlString + "/api/modifystatus"
         let request = NSMutableURLRequest(url: URL(string: url)!)
         let data = "status=\(status)&id=\(id)"
@@ -118,11 +118,12 @@ class APIHelper: NSObject {
             } else {
                 print("Changed status (\(status)): \(id)")
             }
+            finish()
         }
         task.resume()
     }
     
-    internal func addOrder(order: Order) {
+    internal func addOrder(order: Order, finish:@escaping(() -> Void)) {
         let url = urlString + "/api/addorder"
         let request = NSMutableURLRequest(url: URL(string: url)!)
         let n = order.number
@@ -139,6 +140,7 @@ class APIHelper: NSObject {
             } else {
                 print("Added part: \(order.name)")
             }
+            finish()
         }
         task.resume()
     }
@@ -151,9 +153,9 @@ class APIHelper: NSObject {
         request.httpBody = data.data(using: .utf8)
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if error == nil {
-                print("Error modifying inventory: " + (error?.localizedDescription)!)
-            } else {
                 print("Modified inventory")
+            } else {
+                print("Error modifying inventory: " + (error?.localizedDescription)!)
             }
         }
         task.resume()

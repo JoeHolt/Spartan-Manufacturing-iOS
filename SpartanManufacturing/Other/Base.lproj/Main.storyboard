@@ -6,6 +6,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -122,6 +123,35 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Get-2L-Gb7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1487" y="359"/>
+        </scene>
+        <!--Modify StatusVC-->
+        <scene sceneID="xU2-ie-ZA3">
+            <objects>
+                <viewController storyboardIdentifier="ModifyStatus" id="AT5-TU-O8h" customClass="ModifyStatusVC" customModule="SpartanManufacturing" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mck-fL-t7N">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NKp-Gg-2CS">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            </pickerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="IxS-51-iG0" firstAttribute="bottom" secondItem="NKp-Gg-2CS" secondAttribute="bottom" id="Cfx-LL-UYa"/>
+                            <constraint firstItem="NKp-Gg-2CS" firstAttribute="top" secondItem="IxS-51-iG0" secondAttribute="top" id="aQF-qt-0PY"/>
+                            <constraint firstItem="IxS-51-iG0" firstAttribute="trailing" secondItem="NKp-Gg-2CS" secondAttribute="trailing" id="orj-7S-OXs"/>
+                            <constraint firstItem="NKp-Gg-2CS" firstAttribute="leading" secondItem="mck-fL-t7N" secondAttribute="leading" id="wnU-9Y-hq2"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="IxS-51-iG0"/>
+                    </view>
+                    <connections>
+                        <outlet property="picker" destination="NKp-Gg-2CS" id="txU-zF-qtK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RNz-v9-9eV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="748" y="1066"/>
         </scene>
         <!--Add Order-->
         <scene sceneID="HGi-Qa-fxw">

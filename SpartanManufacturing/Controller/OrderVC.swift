@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OrderVC: UITableViewController, UIPopoverPresentationControllerDelegate, AddOrderDelegate {
+class OrderVC: UITableViewController, UIPopoverPresentationControllerDelegate, AddOrderDelegate, ModifyStatusDelegate {
 
     // MARK: - Properties
     
@@ -33,7 +33,7 @@ class OrderVC: UITableViewController, UIPopoverPresentationControllerDelegate, A
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
         let order = orders[indexPath.row]
         cell.textLabel?.text = order.name
-        cell.detailTextLabel?.text = "N: \(order.number!) | C: \(order.completed!) | D: \(order.date!)"
+        cell.detailTextLabel?.text = "N: \(order.number!) | C: \(order.status!) | D: \(order.date!)"
         return cell
     }
     
@@ -51,8 +51,8 @@ class OrderVC: UITableViewController, UIPopoverPresentationControllerDelegate, A
             self.deleteOrderAtRow(row: indexPath.row)
         }
         delete.backgroundColor = UIColor.red
-        let complete = UITableViewRowAction(style: .default, title: "Complete") { (action, indexPath) in
-            self.completeOrderAtRow(row: indexPath.row)
+        let complete = UITableViewRowAction(style: .default, title: "Edit Status") { (action, indexPath) in
+            self.modifyStatusAtIndex(row: indexPath.row)
         }
         complete.backgroundColor = UIColor.blue
         return [delete, complete]
@@ -78,11 +78,17 @@ class OrderVC: UITableViewController, UIPopoverPresentationControllerDelegate, A
         }
     }
     
-    private func completeOrderAtRow(row: Int) {
-        let order = orders[row]
-        apiHelper.markOrderCompleted(completed: !order.completed, num: order.number!)
-        order.completed = !order.completed
-        tableView.reloadSections([0], with: .automatic)
+    private func modifyStatusAtIndex(row: Int) {        
+        let popoverContent = self.storyboard?.instantiateViewController(withIdentifier: "ModifyStatus") as! ModifyStatusVC
+        popoverContent.delegate = self
+        popoverContent.orderNumber = orders[row].number
+        let nav = UINavigationController(rootViewController: popoverContent)
+        nav.modalPresentationStyle = UIModalPresentationStyle.popover
+        let popover = nav.popoverPresentationController
+        popoverContent.preferredContentSize = CGSize(width: 500, height: 100)
+        popover?.delegate = self
+        popover?.sourceView = tableView.cellForRow(at: IndexPath(row: row, section: 0))
+        self.present(nav, animated: true, completion: nil)
     }
     
     private func deleteOrderAtRow(row: Int) {
@@ -110,6 +116,10 @@ class OrderVC: UITableViewController, UIPopoverPresentationControllerDelegate, A
     // MARK: - Delegate
     
     func didAddOrder() {
+        refresh()
+    }
+    
+    func didModifyStatus() {
         refresh()
     }
     

@@ -63,6 +63,33 @@ class APIHelper: NSObject {
         task.resume()
     }
     
+    internal func getAllStatusCodes(finishedClosure:@escaping (([String]?) -> Void)) {
+        let url = urlString + "/api/getstatuscodes"
+        let request = NSMutableURLRequest(url: URL(string: url)!)
+        request.httpMethod = "GET"
+        let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
+            if error == nil {
+                let json = try? JSONSerialization.jsonObject(with: data!, options: []) as! NSArray
+                if let arr = json {
+                    var codes = [String]()
+                    for dic in arr {
+                        if let d = dic as? [String: Any] {
+                            let str = d["name"] as? String
+                            if let new = str {
+                                codes.append(new)
+                            }
+                        }
+                    }
+                    finishedClosure(codes)
+                }
+            } else {
+                print("Error loading status codes")
+                finishedClosure(nil)
+            }
+        }
+        task.resume()
+    }
+    
     internal func deleteOrder(withOrderNumber num: Int) {
         let url = urlString + "/api/deleteorder"
         let request = NSMutableURLRequest(url: URL(string: url)!)
@@ -79,17 +106,17 @@ class APIHelper: NSObject {
         task.resume()
     }
     
-    internal func markOrderCompleted(completed: Bool, num: Int) {
-        let url = urlString + "/api/completeorder"
+    internal func modifyStatus(status: String, num: Int) {
+        let url = urlString + "/api/modifystatus"
         let request = NSMutableURLRequest(url: URL(string: url)!)
-        let data = "completed=\(completed)&number=\(num)"
+        let data = "status=\(status)&number=\(num)"
         request.httpBody = data.data(using: .utf8)
         request.httpMethod = "POST"
         let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
             if error != nil {
                 print("Error marking order completed")
             } else {
-                print("Completed(\(completed)): \(num)")
+                print("Changed status (\(status)): \(num)")
             }
         }
         task.resume()

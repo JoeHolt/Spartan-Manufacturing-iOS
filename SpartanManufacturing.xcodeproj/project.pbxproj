@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6922A42E1FF43A6900185187 /* AddOrderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6922A42D1FF43A6900185187 /* AddOrderVC.swift */; };
+		6922A4301FF5FB2400185187 /* ModifyStatusVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6922A42F1FF5FB2400185187 /* ModifyStatusVC.swift */; };
 		69BE78A61FEF438F004F49A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BE78A51FEF438F004F49A6 /* AppDelegate.swift */; };
 		69BE78A81FEF438F004F49A6 /* ProductsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BE78A71FEF438F004F49A6 /* ProductsVC.swift */; };
 		69BE78AA1FEF438F004F49A6 /* OrderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BE78A91FEF438F004F49A6 /* OrderVC.swift */; };
@@ -33,6 +34,7 @@
 /* Begin PBXFileReference section */
 		6922A42C1FF4372800185187 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		6922A42D1FF43A6900185187 /* AddOrderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOrderVC.swift; sourceTree = "<group>"; };
+		6922A42F1FF5FB2400185187 /* ModifyStatusVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyStatusVC.swift; sourceTree = "<group>"; };
 		69BE78A21FEF438F004F49A6 /* SpartanManufacturing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpartanManufacturing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69BE78A51FEF438F004F49A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		69BE78A71FEF438F004F49A6 /* ProductsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsVC.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				69BE78A71FEF438F004F49A6 /* ProductsVC.swift */,
 				69BE78A91FEF438F004F49A6 /* OrderVC.swift */,
 				6922A42D1FF43A6900185187 /* AddOrderVC.swift */,
+				6922A42F1FF5FB2400185187 /* ModifyStatusVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 				69BE78C81FEF43AF004F49A6 /* APIHelper.swift in Sources */,
 				69BE78AA1FEF438F004F49A6 /* OrderVC.swift in Sources */,
 				6922A42E1FF43A6900185187 /* AddOrderVC.swift in Sources */,
+				6922A4301FF5FB2400185187 /* ModifyStatusVC.swift in Sources */,
 				69BE78CE1FEF4B1B004F49A6 /* Product.swift in Sources */,
 				69BE78A61FEF438F004F49A6 /* AppDelegate.swift in Sources */,
 				69BE78A81FEF438F004F49A6 /* ProductsVC.swift in Sources */,

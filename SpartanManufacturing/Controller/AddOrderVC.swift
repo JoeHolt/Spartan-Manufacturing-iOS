@@ -60,7 +60,7 @@ class AddOrderVC: UITableViewController, UIPickerViewDelegate, UIPickerViewDataS
         let name = pickerSelected!
         let notes = self.notesField.text ?? ""
         let orderNumber = Int(self.orderNumberField.text!) ?? nil
-        let order = Order(name: name, number: orderNumber, completed: false, date: nil, notes: notes)
+        let order = Order(name: name, number: orderNumber, status: "", date: nil, notes: notes)
         helper.addOrder(order: order)
         delegate.didAddOrder()
         self.dismiss(animated: true, completion: nil)

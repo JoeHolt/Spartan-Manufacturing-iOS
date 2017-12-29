@@ -106,17 +106,17 @@ class APIHelper: NSObject {
         task.resume()
     }
     
-    internal func modifyStatus(status: String, num: Int) {
+    internal func modifyStatus(status: String, id: Int) {
         let url = urlString + "/api/modifystatus"
         let request = NSMutableURLRequest(url: URL(string: url)!)
-        let data = "status=\(status)&number=\(num)"
+        let data = "status=\(status)&id=\(id)"
         request.httpBody = data.data(using: .utf8)
         request.httpMethod = "POST"
         let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
             if error != nil {
                 print("Error marking order completed")
             } else {
-                print("Changed status (\(status)): \(num)")
+                print("Changed status (\(status)): \(id)")
             }
         }
         task.resume()

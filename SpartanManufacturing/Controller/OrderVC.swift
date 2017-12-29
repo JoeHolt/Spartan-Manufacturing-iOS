@@ -81,7 +81,7 @@ class OrderVC: UITableViewController, UIPopoverPresentationControllerDelegate, A
     private func modifyStatusAtIndex(row: Int) {        
         let popoverContent = self.storyboard?.instantiateViewController(withIdentifier: "ModifyStatus") as! ModifyStatusVC
         popoverContent.delegate = self
-        popoverContent.orderNumber = orders[row].number
+        popoverContent.orderNumber = orders[row].id
         let nav = UINavigationController(rootViewController: popoverContent)
         nav.modalPresentationStyle = UIModalPresentationStyle.popover
         let popover = nav.popoverPresentationController

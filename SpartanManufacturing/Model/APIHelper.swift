@@ -90,17 +90,17 @@ class APIHelper: NSObject {
         task.resume()
     }
     
-    internal func deleteOrder(withOrderNumber num: Int) {
+    internal func deleteOrder(withOrderID id: Int) {
         let url = urlString + "/api/deleteorder"
         let request = NSMutableURLRequest(url: URL(string: url)!)
-        let data = "number=\(num)"
+        let data = "id=\(id)"
         request.httpBody = data.data(using: .utf8)
         request.httpMethod = "POST"
         let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, error) in
             if error != nil {
                 print("Error deleting product")
             } else {
-                print("Deleted order: \(num)")
+                print("Deleted order: \(id)")
             }
         }
         task.resume()

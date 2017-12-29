@@ -93,7 +93,7 @@ class OrderVC: UITableViewController, UIPopoverPresentationControllerDelegate, A
     
     private func deleteOrderAtRow(row: Int) {
         let order = orders[row]
-        apiHelper.deleteOrder(withOrderNumber: order.number!)
+        apiHelper.deleteOrder(withOrderID: order.id)
         orders.remove(at: row)
         tableView.reloadSections([0], with: .automatic)
     }

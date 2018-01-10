@@ -2,7 +2,7 @@
 
 An iOS front end to the Spartan Manufacturing web service. This was an adition to my Spartan Manufacturing project that was made purely for my enjoyment as we have no method to deploy iOS app's to student's devices at McFarland (we would need an enterprise development cert)
 
-# Learnign Goals
+# Learning Goals
 
 My goal with this was to improve my knowlage on making GET/POST requests from iOS apps aswell as working with the correct thread and async code.
 
@@ -15,7 +15,13 @@ My goal with this was to improve my knowlage on making GET/POST requests from iO
 - Delete order
 - Modify order
 - Modify inventory
-- Fully thred and async sage
+- Fully thread and async safe
+
+# Images
+
+![Orders](https://i.imgur.com/6tmYprf.png)
+
+![Products](https://i.imgur.com/TBNEppL.png)
 
 # Running the app
 
